@@ -35,7 +35,7 @@ class Solution:
 
 1. 如果使用 `for i in list:` 这种写法并在此循环中对 `list` 进行修改是无效的，此处 `list` 仅作为一个生成器来使用，如需修改只能使用下标进行
 
-2. 在循环中使用 `pop` 等操作对列表操作是非常不好的，很有可能导致缺值漏值问题
+2. 在 `for` 循环中使用 `pop` 等操作对列表操作是非常不好的，因为无法自己控制 index，很有可能导致缺值漏值问题，所以使用 `while` 循环
 
 3. 需对列表为空进行判断，否则会导致超程问题
 
@@ -459,4 +459,90 @@ class Solution:
             else:
                 ind1 += 1
         return res
+```
+
+## 66. 加一
+
+解法 1：
+
+```python
+class Solution:
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        if digits[-1] != 9:
+            digits[-1] += 1
+        else:
+            i = -1
+            length = -len(digits)-1
+            while(i > length and digits[i] ==9):
+                digits[i] = 0
+                i -= 1
+            if i == length:
+                digits[0] = 1
+                digits.append(0)
+            else:
+                digits[i] += 1
+        return digits
+```
+
+## 283. 移动零
+
+解法 1：
+
+这个解法有点慢了
+
+```python
+class Solution:
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        ti = nums.count(0)
+        for i in range(ti):
+            nums.remove(0)
+            nums.append(0)
+```
+
+解法 2：
+
+快了挺多
+
+```python
+class Solution:
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        i = dl = 0
+        length = len(nums)
+        while(dl + i != length-1):
+            if nums[i] == 0:
+                del nums[i]
+                dl += 1
+            else:
+                i += 1
+        nums += [0]*dl
+```
+
+解法 3：
+
+妙啊
+
+```python
+class Solution:
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        j = 0
+        for i in range(len(nums)):
+            if nums[i] != 0:
+                nums[j], nums[i] = nums[i], nums[j]
+                j += 1
 ```
