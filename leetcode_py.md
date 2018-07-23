@@ -315,3 +315,91 @@ class Solution:
         """
         return len(set(nums)) != len(nums)
 ```
+
+## 136. 只出现一次的数字 [easy]
+
+解法 1：
+
+显然通过排序速度慢了
+
+```python
+class Solution:
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)-1
+        if length == 0:
+            return nums[0]
+        nums.sort()
+        for p1 in range(0,length,2):
+            if nums[p1] != nums[p1+1]:
+                return nums[p1]
+        return nums[length]
+```
+
+注意：
+
+1. 不能通过在循环内修改下标改变迭代步长，只能在 `range` 中修改
+
+    ```python
+    for p1 in range(0,len(nums)):
+        print(nums[p1])
+        p1 += 1  # 此代码是无效的，p1来自于生成器range
+    ```
+
+解法 2：
+
+通过数学方法==
+
+```python
+class Solution:
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return sum(set(nums))*2 - sum(nums)
+```
+
+解法 3：
+
+位运算，学习了
+
+```python
+class Solution:
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = 0
+        for num in nums:
+            n ^= num
+        return n
+```
+
+说明：
+
+1. `^` 的用法
+
+    ```python
+    2 ^ 3
+    1 0 = 2
+    1 1 = 3
+    -------
+    0 1 = 1
+
+    2 ^ 255
+    0 0 0 0 0 0 1 0 = 2
+    1 1 1 1 1 1 1 1 = 255
+    ---------------------
+    1 1 1 1 1 1 0 1 = 253
+
+    3 ^ 2
+    1 1 = 3
+    1 0 = 2
+    -------
+    0 1 = 1
+    ```
