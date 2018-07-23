@@ -461,7 +461,7 @@ class Solution:
         return res
 ```
 
-## 66. 加一
+## 66. 加一 [easy]
 
 解法 1：
 
@@ -488,7 +488,7 @@ class Solution:
         return digits
 ```
 
-## 283. 移动零
+## 283. 移动零 [easy]
 
 解法 1：
 
@@ -545,4 +545,169 @@ class Solution:
             if nums[i] != 0:
                 nums[j], nums[i] = nums[i], nums[j]
                 j += 1
+```
+
+## 1. 两数之和 [easy]
+
+解法 1：
+
+这个解法很慢了
+
+```python
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        for p1 in range(len(nums)):
+            try:
+                res = [p1, nums[p1+1:].index(target-nums[p1])+p1+1]
+                return res
+            except:
+                pass
+
+# 耗时 1300ms
+```
+
+解法 2：
+
+。看起来 `index` 方法快挺多的
+
+```python
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        length = len(nums)
+        for p1 in range(length):
+            i1 = target - nums[p1]
+            for p2 in range(p1+1,length):
+                if i1 == nums[p2]:
+                    return [p1,p2]
+
+# 耗时 6600ms
+```
+
+解法 3：
+
+原来字典的哈希表这么快啊。。。
+
+```python
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        dic = {}
+        for i, num in enumerate(nums):
+            if (target - num) in dic:
+                return i,dic[target - num]
+            dic[num] = i
+
+# 耗时 76ms
+```
+
+## 36. 有效的数独 [easy]
+
+解法 1：
+
+有点累赘
+
+```python
+class Solution:
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        for col in range(9):
+            dic = {}
+            for line in range(9):
+                if board[line][col] != '.':
+                    if board[line][col] in dic:
+                        return False
+                    else:
+                        dic[board[line][col]] = None
+        for line in range(9):
+            dic = {}
+            for col in range(9):
+                if board[line][col] != '.':
+                    if board[line][col] in dic:
+                        return False
+                    else:
+                        dic[board[line][col]] = None
+        for c1 in range(3):
+            for l1 in range(3):
+                dic = {}
+                for col in range(c1*3,c1*3+3):
+                    for line in range(l1*3,l1*3+3):
+                        if board[line][col] != '.':
+                            if board[line][col] in dic:
+                                return False
+                            else:
+                                dic[board[line][col]] = None
+        return True
+
+# 耗时 104ms
+```
+
+解法 2：
+
+一次循环全判段，`col//3*3 + line//3` 很重要
+
+```python
+class Solution:
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        dc = {i:{} for i in range(9)}
+        dl = {i:{} for i in range(9)}
+        dcell = {i:{} for i in range(9)}
+        for col in range(9):
+            for line in range(9):
+                if board[line][col] != '.':
+                    ce = col//3*3 + line//3
+                    sa = board[line][col]
+                    if sa in collections.ChainMap(dc[col],dl[line],dcell[ce]):
+                        return False
+                    else:
+                        dc[col][sa] = None
+                        dl[line][sa] = None
+                        dcell[ce][sa] = None
+        return True
+
+# 耗时 108ms，。。。
+```
+
+## 36. 旋转图像 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix[0])
+        n_1 = n-1
+        for row in range(0, n//2):
+            n_1_row = n_1-row
+            for col in range(row, n_1-row):
+                temp = matrix[row][col]
+                n_1_col = n_1-col
+                matrix[row][col] = matrix[n_1_col][row]
+                matrix[n_1_col][row] = matrix[n_1_row][n_1_col]
+                matrix[n_1_row][n_1_col] = matrix[col][n_1_row]
+                matrix[col][n_1_row] = temp
 ```
