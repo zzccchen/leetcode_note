@@ -230,3 +230,88 @@ class Solution:
 ```
 
 经测试：直接通过下标访问列表似乎比通过变量缓存速度更快（我也不懂
+
+## 189. 旋转数组 [easy]
+
+解法 1：
+
+废话多了些
+
+```python
+class Solution:
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        length = len(nums)
+        k = k if k < length else k % length
+        i2 = nums[length-k:]
+        nums[k:] = nums[0:length-k]
+        nums[0:k] = i2
+
+# 耗时 64ms
+```
+
+解法 2：
+
+显然，在列表的操作上还有更 Pythonic 的方法
+
+```python
+class Solution:
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        k = k % len(nums)
+        nums[:] = nums[-k:]+nums[:-k]
+        # 或
+        # nums[:] = nums[len(nums)-k:] + nums[:len(nums)-k]
+
+# 耗时 104ms，不管了这平台测速有点问题。。。
+```
+
+说明：
+
+1. 对于
+    ```python
+    >>> nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    >>> nums[-k:]  # 等同于 nums[len(nums)-k:]
+    [7, 8, 9]
+    >>> nums[:-k]  # 等同于 nums[:len(nums)-k]
+    [7, 8, 9, 0, 1, 2, 3, 4, 5, 6]
+    ```
+2. `nums[:]` 中的 `[:]` 是必须的，这点好奇怪啊
+
+## 217. 存在重复 [easy]
+
+解法 1：
+
+py 的专属方法了
+
+```python
+class Solution:
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        return False if len(nums) == len(set(nums)) else True
+```
+
+解法 2：
+
+原来还可以再偷啊。。。
+
+```python
+class Solution:
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        return len(set(nums)) != len(nums)
+```
