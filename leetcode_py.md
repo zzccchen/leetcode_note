@@ -403,3 +403,60 @@ class Solution:
     -------
     0 1 = 1
     ```
+
+## 350. 两个数组的交集 II [easy]
+
+解法 1：
+
+常规方法
+
+```python
+class Solution:
+    def intersect(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        res = []
+        for i in nums1:
+            if i in nums2:
+                res.append(i)
+                nums2.remove(i)
+        return res
+```
+
+解法 2：
+
+先排序后比较
+
+```python
+class Solution:
+    def intersect(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        nums1.sort()
+        nums2.sort()
+
+        ind1 = 0
+        ind2 = 0
+
+        len1 = len(nums1)
+        len2 = len(nums2)
+
+        res = []
+        while ind1 < len1 and ind2 < len2:
+            diff = nums1[ind1] - nums2[ind2]
+            if diff == 0:
+                res.append(nums1[ind1])
+                ind1 += 1
+                ind2 += 1
+            elif diff > 0:
+                ind2 += 1
+            else:
+                ind1 += 1
+        return res
+```
