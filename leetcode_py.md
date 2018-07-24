@@ -791,3 +791,45 @@ class Solution:
             else:
                 return x
 ```
+
+## 387. 字符串中的第一个唯一字符 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        length = len(s)
+        if length > 1:
+            dic = {i : None for i in "abcdefghijklmnopqrstuvwxyz" if s.count(i) == 1}
+            if len(dic) == 0:
+                return -1
+            for i in range(length):
+                if s[i] in dic:
+                    return i
+        elif length == 1:
+            return 0
+        else:
+            return -1
+```
+
+解法 2：
+
+有点意思，用 `string.ascii_lowercase` 来替代 `"abcdefghijklmnopqrstuvwxyz"` 确实好
+
+```python
+class Solution:
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        lowercase = string.ascii_lowercase
+
+        L_index = [s.index(label) for label in lowercase if s.count(label) == 1]
+        return min(L_index) if len(L_index) else -1
+```
