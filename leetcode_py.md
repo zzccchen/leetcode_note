@@ -711,3 +711,83 @@ class Solution:
                 matrix[n_1_row][n_1_col] = matrix[col][n_1_row]
                 matrix[col][n_1_row] = temp
 ```
+
+## 344. 反转字符串 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def reverseString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        lis = [i for i in s]
+        lis.reverse()
+        return "".join(lis)
+```
+
+注意：
+
+1. `reverse()` 函数没有返回值
+
+解法 2：
+
+```python
+class Solution:
+    def reverseString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        return s[::-1]
+```
+
+## 7. 反转整数 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        x = str(x)
+        if x[0] == '-':
+            x = '-' + x[:0:-1]
+        else:
+            x = x[::-1]
+        x = int(x)
+        if x < -2147483648 or x > 2147483647:
+            return 0
+        else:
+            return x
+```
+
+解法 2：
+
+把负号变正号再处理
+
+```python
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if x < 0:
+            x = -int(str(-x)[::-1])
+            if x < -2147483648:
+                return 0
+            else:
+                return x
+        else:
+            x = int(str(x)[::-1])
+            if x > 2147483647:
+                return 0
+            else:
+                return x
+```
