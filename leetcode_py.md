@@ -865,3 +865,110 @@ class Solution:
         """
         return set(s) == set(t) and all(s.count(i) == t.count(i) for i in set(s))
 ```
+
+## 125. 验证回文串 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = s.lower()
+        p2 = len(s)-1
+        p1 = 0
+        while(p2-p1>0):
+            if s[p1] not in "abcdefghijklmnopqrstuvwxyz0123456789":
+                p1 += 1
+                continue
+            if s[p2] not in "abcdefghijklmnopqrstuvwxyz0123456789":
+                p2 -= 1
+                continue
+            if s[p2] != s[p1]:
+                return False
+            p1 += 1
+            p2 -= 1
+        return True
+```
+
+解法 2：
+
+```python
+class Solution:
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = s.lower()
+        q = 'abcdefghijklmnopqrstuvwxyz0123456789'
+        t = ''
+        for i in s:
+            if i in q:
+                t+=i
+        return t == t[::-1]
+```
+
+## 8. 字符串转整数 (atoi) [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        res = re.search(r'([-+]?\d+)', str)
+        first = re.search(r'(\S+)', str)
+        if res and res.span()[0] == first.span()[0]:
+            i = int(res.group(1))
+            if i > 2147483647:
+                return 2147483647
+            elif i < -2147483648:
+                return -2147483648
+            else:
+                return i
+        else:
+            return 0
+```
+
+## 28. 实现strStr() [easy]
+
+解法 1：
+
+这似乎不太符合规矩==
+
+```python
+class Solution:
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        return haystack.find(needle)
+```
+
+解法 2：
+
+`index` 还能这么用，学习了
+
+```python
+class Solution:
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        try:
+            index = haystack.index(needle)
+            return index
+        except:
+            return -1
+```
