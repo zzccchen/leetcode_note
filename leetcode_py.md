@@ -833,3 +833,35 @@ class Solution:
         L_index = [s.index(label) for label in lowercase if s.count(label) == 1]
         return min(L_index) if len(L_index) else -1
 ```
+
+## 242. 有效的字母异位词 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        dic1 = {i : s.count(i) for i in string.ascii_lowercase}
+        dic2 = {i : t.count(i) for i in string.ascii_lowercase}
+
+        return dic1 == dic2
+```
+
+解法 2：
+
+没必要用全部 key，`set` 得到的 key 更好
+
+```python
+class Solution:
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        return set(s) == set(t) and all(s.count(i) == t.count(i) for i in set(s))
+```
