@@ -972,3 +972,91 @@ class Solution:
         except:
             return -1
 ```
+
+## 38. 数数并说 [easy]
+
+解法 1：
+
+暂时找不到其他规律了。。只能递推了
+
+```python
+class Solution:
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        num = "1"
+        for i in range(n-1):
+            count = 0
+            pre = num[0]
+            temp = ""
+            for p1 in range(len(num)):
+                if num[p1] != pre:
+                    temp = temp + str(count) + pre
+                    pre = num[p1]
+                    count = 1
+                else:
+                    count += 1
+            num = temp + str(count) + pre
+        return num
+```
+
+## 14. 最长公共前缀 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        length = len(strs)
+        if length == 1:
+            return strs[0]
+        elif length == 0:
+            return ""
+        else:
+            res = ""
+            while(True):
+                try:
+                    res += strs[0][0]
+                    strs[0] = strs[0][1:]
+                except:
+                    return res
+                try:
+                    for p1 in range(1,length):
+                        if strs[p1][0] == res[-1]:
+                            strs[p1] = strs[p1][1:]
+                        else:
+                            return res[:-1]
+                except:
+                    return res[:-1]
+```
+
+解法 2：
+
+简化了解法 1
+
+```python
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        length = len(strs)
+        if length == 0:
+            return ""
+        else:
+            strs.sort(key=len)
+            res = ""
+            for i in range(len(strs[0])):
+                res += strs[0][i]
+                for p1 in range(1, length):
+                    if strs[p1][i] != res[-1]:
+                        return res[:-1]
+            return res
+```
