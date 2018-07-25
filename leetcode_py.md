@@ -614,7 +614,7 @@ class Solution:
 # 耗时 76ms
 ```
 
-## 36. 有效的数独 [easy]
+## 36. 有效的数独 [medium]
 
 解法 1：
 
@@ -688,7 +688,7 @@ class Solution:
 # 耗时 108ms，。。。
 ```
 
-## 36. 旋转图像 [easy]
+## 48. 旋转图像 [medium]
 
 解法 1：
 
@@ -912,7 +912,7 @@ class Solution:
         return t == t[::-1]
 ```
 
-## 8. 字符串转整数 (atoi) [easy]
+## 8. 字符串转整数 (atoi) [medium]
 
 解法 1：
 
@@ -1059,4 +1059,127 @@ class Solution:
                     if strs[p1][i] != res[-1]:
                         return res[:-1]
             return res
+```
+
+## 237. 删除链表中的节点 [easy]
+
+解法 1：
+
+原来 py 的链表这么写啊
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        node.val = node.next.val
+        node.next = node.next.next
+```
+
+解法 2：
+
+手动删除
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        node.val = node.next.val
+        addr = node.next
+        node.next = addr.next
+        del addr
+```
+
+## 19. 删除链表的倒数第N个节点 [medium]
+
+解法 1：
+
+把顺序写进字典
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        node, i, dic = head, 0, {}
+        while(node):
+            dic[i] = node
+            i += 1
+            node = node.next
+        length = len(dic)
+        del_num = length - n
+        if del_num == 0:
+            return dic.get(1)
+        elif n == 1:
+            dic[del_num-1].next = None
+            return head
+        else:
+            dic[del_num].val = dic[del_num+1].val
+            dic[del_num].next = dic[del_num+1].next
+            return head
+```
+
+解法 2：
+
+通过指针追逐来实现，妙啊
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        if head is None:
+            return
+
+        step = 0
+        ptr1 = head
+        ptr2 = head
+        while ptr1 is not None:
+            ptr1 = ptr1.next
+            step += 1
+            if step > n + 1:
+                ptr2 = ptr2.next
+
+        if step == n:
+            head = head.next
+            return head
+
+        if ptr2.next is not None:
+            ptr2.next = ptr2.next.next
+        return head
 ```
