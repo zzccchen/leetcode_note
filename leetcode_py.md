@@ -1183,3 +1183,207 @@ class Solution:
             ptr2.next = ptr2.next.next
         return head
 ```
+
+## 206. 反转链表 [easy]
+
+解法 1：
+
+迭代法
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        node = head
+        pre = None
+        while(node):
+            temp = node.next
+            node.next = pre
+            pre = node
+            node = temp
+        return pre
+```
+
+## 21. 合并两个有序链表 [easy]
+
+解法 1：
+
+没看到有序二字。。。
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        lis, i = [], 0
+        while(l1):
+            lis.append((l1.val, i, l1))
+            i += 1
+            l1 = l1.next
+        while(l2):
+            lis.append((l2.val, i, l2))
+            i += 1
+            l2 = l2.next
+        lis.sort()
+        length = len(lis)
+        if length == 0:
+            return None
+        elif length == 1:
+            lis[0][2].next = None
+            return lis[0][2]
+        else:
+            for p2 in range(1, length):
+                lis[p2-1][2].next = lis[p2][2]
+            lis[p2][2].next = None
+            return lis[0][2]
+```
+
+解法 2：
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        if l2 == None:
+            return l1
+        if l1 == None:
+            return l2
+        result = ListNode(0)
+        result1 = result
+        while l1 and l2:
+            if l1.val >= l2.val:
+                result1.next = l2
+                l2 = l2.next
+            else:
+                result1.next = l1
+                l1 = l1.next
+            result1 = result1.next
+        while l1:
+            result1.next = l1
+            l1 = l1.next
+            result1 = result1.next
+        while l2:
+            result1.next = l2
+            l2 = l2.next
+            result1 = result1.next
+        return result.next
+```
+
+## 234. 回文链表 [easy]
+
+解法 1：
+
+`list.reverse()` 没有返回值，直接修改 `list` 的，要用就用 `list(reversed(t))` 或 `list[::-1]`
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        t = []
+        while(head):
+            t.append(head.val)
+            head = head.next
+        return t == t[::-1]
+```
+
+## 141. 环形链表 [easy]
+
+解法 1：
+
+判段地方啰嗦了
+
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head:
+            return False
+        p2 = head.next
+        p1 = head
+        while(p2):
+            if p1 == p2:
+                return True
+            else:
+                p1 = p1.next
+                try:
+                    p2 = p2.next.next
+                except:
+                    return False
+        return False
+```
+
+解法 2：
+
+判段地方啰嗦了
+
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head:
+            return False
+        p2 = head.next
+        p1 = head
+        while(p1 != p2):
+            p1 = p1.next
+            try:
+                p2 = p2.next.next
+            except:
+                return False
+        return True
+```
