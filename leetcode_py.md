@@ -1457,3 +1457,38 @@ class Solution:
             rd_max = val
         return ld_min, rd_max
 ```
+
+## 101. 对称二叉树 [easy]
+
+解法 1：
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        try:
+            if root:
+                self.isSymmetric_(root.left, root.right)
+            return True
+        except:
+            return False
+
+    def isSymmetric_(self, node1, node2):
+        if node1 == None and node2 == None:
+            return
+        if node1.val == node2.val:
+            self.isSymmetric_(node1.left, node2.right)
+            self.isSymmetric_(node1.right, node2.left)
+        else:
+            raise RuntimeError
+```
