@@ -1387,3 +1387,73 @@ class Solution(object):
                 return False
         return True
 ```
+
+## 104. 二叉树的最大深度 [easy]
+
+解法 1：
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
+        ld = self.maxDepth(root.left)
+        rd = self.maxDepth(root.right)
+        return max(ld, rd) + 1
+        # 或
+        # return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1 if root else 0
+```
+
+## 98. 验证二叉搜索树 [medium]
+
+解法 1：
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        try:
+            self.isValidBST_(root)
+            return True
+        except:
+            return False
+
+    def isValidBST_(self, node):
+        val = node.val
+        if node.left:
+            ld_min, ld_max = self.isValidBST_(node.left)
+            if ld_max >= val:
+                raise RuntimeError
+        else:
+            ld_min = val
+        if node.right:
+            rd_min, rd_max = self.isValidBST_(node.right)
+            if rd_min <= val:
+                raise RuntimeError
+        else:
+            rd_max = val
+        return ld_min, rd_max
+```
