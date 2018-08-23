@@ -1492,3 +1492,118 @@ class Solution:
         else:
             raise RuntimeError
 ```
+
+## 102. 二叉树的层次遍历 [medium]
+
+解法 1：
+
+递归
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    rst = []
+    deep = -1
+
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        self.rst = []
+        self.deep = -1
+        self.levelOrder_(root, 0)
+        return self.rst
+
+    def levelOrder_(self, node, layer):
+        if not node:
+            return
+        if layer > self.deep:
+            self.deep += 1
+            self.rst.append([node.val])
+        else:
+            self.rst[layer].append(node.val)
+        layer += 1
+        self.levelOrder_(node.left, layer)
+        self.levelOrder_(node.right, layer)
+```
+
+解法 2：
+
+遍历，按层读，善用 `pop`
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        res = []
+        if root is None:
+            return res
+
+        res.append([root.val])
+        queue = [root]
+        while queue and queue[0]:
+            level = []
+            count = len(queue)
+            for i in range(count):
+                node = queue.pop(0)
+                if node.left:
+                    queue.append(node.left)
+                    level.append(node.left.val)
+                if node.right:
+                    queue.append(node.right)
+                    level.append(node.right.val)
+
+            if level:
+                res.append(level)
+        return res
+```
+
+解法 3：
+
+遍历
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def levelOrder(self, root):
+        if root is None:
+            return []
+
+        result, current = [], [root]
+        while current:
+            next_level, vals = [], []
+            for node in current:
+                vals.append(node.val)
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+
+            current = next_level
+            result.append(vals)
+
+        return result
+```
