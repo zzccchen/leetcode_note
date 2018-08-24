@@ -1607,3 +1607,155 @@ class Solution:
 
         return result
 ```
+
+## 108. 将有序数组转换为二叉搜索树 [easy]
+
+解法 1：
+
+直接借鉴大佬的算法 = =
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def sortedArrayToBST(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        if not nums:
+            return None
+        half_length = len(nums)//2
+        root = TreeNode(nums[half_length])
+        root.left = self.sortedArrayToBST(nums[:half_length])
+        root.right = self.sortedArrayToBST(nums[half_length+1:])
+        return root
+```
+
+## 88. 合并两个有序数组 [easy]
+
+解法 1：
+
+没有通过测试，百思不得其解
+
+```python
+class Solution:
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: void Do not return anything, modify nums1 in-place instead.
+        """
+        nums1 = nums1[:m]
+        nums1.extend(nums2)
+        nums1.sort()
+```
+
+解法 2：
+
+大佬写法
+
+```python
+class Solution:
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: void Do not return anything, modify nums1 in-place instead.
+        """
+        nums1[m:] = nums2
+        nums1.sort()
+```
+
+## 278. 第一个错误的版本 [easy]
+
+解法 1：
+
+大笨蛋写法
+
+```python
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return a bool
+# def isBadVersion(version):
+
+class Solution:
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        return self.firstBadVersion_(1, n, 0)
+
+    def firstBadVersion_(self, head, tail, fhead):
+        if fhead+1 >= tail:
+            return tail
+        half = (head + tail) // 2
+        if isBadVersion(half):
+            return self.firstBadVersion_(head, half, fhead)
+        else:
+            return self.firstBadVersion_(half+1, tail, half)
+```
+
+解法 2：
+
+大笨蛋写法
+
+```python
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return a bool
+# def isBadVersion(version):
+
+class Solution:
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        return self.firstBadVersion_(1, n)
+
+    def firstBadVersion_(self, head, tail):
+        if head+1 >= tail:
+            return head if isBadVersion(head) else tail
+        half = (head + tail) // 2
+        if isBadVersion(half):
+            return self.firstBadVersion_(head, half)
+        else:
+            return self.firstBadVersion_(half, tail)
+```
+
+解法 3：
+
+循环写法
+
+```python
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return a bool
+# def isBadVersion(version):
+
+class Solution:
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        head, tail = 1, n
+        while(head+1 < tail):
+            half = (head + tail) // 2
+            if isBadVersion(half):
+                tail = half
+            else:
+                head = half + 1
+        return head if isBadVersion(head) else tail
+```
