@@ -1759,3 +1759,58 @@ class Solution:
                 head = half + 1
         return head if isBadVersion(head) else tail
 ```
+
+## 155. 最小栈 [easy]
+
+解法 1：
+
+每次都写 ```if not self.min:``` 这次果然翻车了
+
+```python
+class MinStack:
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.mem = []
+        self.min = None
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: void
+        """
+        self.mem.append(x)
+        if self.min == None or self.min > x:
+            self.min = x
+
+    def pop(self):
+        """
+        :rtype: void
+        """
+        temp = self.mem.pop()
+        if temp <= self.min:
+            self.min = min(self.mem) if self.mem else None
+        return temp
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        return self.mem[-1]
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        return self.min
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
+```
