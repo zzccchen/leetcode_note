@@ -1838,3 +1838,27 @@ class Solution:
                 lis.append(str(i))
         return lis
 ```
+
+## 204. 计数质数 [easy]
+
+解法 1：
+
+厄拉多塞筛法
+
+```python
+class Solution:
+    #根据算术基本定理，每一个比1大的整数，要么本身是一个质数，要么可以写成一系列质数的乘积；
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n < 2:
+            return 0
+        res = [1] * n
+        res[0],res[1] = 0,0
+        for i in range(2, int(n ** 0.5) + 1):
+            if res[i] == 1:
+                res[i * i:n:i] = [0] * int((n-i*i-1)/i + 1)
+        return sum(res)
+```
