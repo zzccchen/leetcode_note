@@ -1862,3 +1862,123 @@ class Solution:
                 res[i * i:n:i] = [0] * int((n-i*i-1)/i + 1)
         return sum(res)
 ```
+
+## 326. 3的幂 [easy]
+
+解法 1：
+
+`round()` 得到最接近原数的整型
+
+```python
+import math
+class Solution:
+    def isPowerOfThree(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        return n > 0 and 3**round(math.log(n, 3)) == n
+```
+
+解法 2：
+
+```python
+import math
+class Solution:
+    def isPowerOfThree(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        if n < 1:
+            return False
+        temp = math.log(n, 3) % 1
+        if temp == 0 or temp > 0.999999999999990:
+            return True
+        else:
+            return False
+```
+
+## 13. 罗马数字转整数 [easy]
+
+解法 1：
+
+`round()` 得到最接近原数的整型
+
+```python
+class Solution:
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        sum = 0
+        lis = [i for i in s]
+        temp = None
+        while(lis):
+            temp = lis.pop()
+            if temp == "I":
+                sum += 1
+            else:
+                break
+        if temp == "V":
+            sum += 5
+            if lis:
+                temp = lis.pop()
+                if temp == "I":
+                    sum -= 1
+                    if lis:
+                        temp = lis.pop()
+                    else:
+                        return sum
+        if temp == "X":
+            sum += 10
+            while(lis):
+                temp = lis.pop()
+                if temp == "X":
+                    sum += 10
+                elif temp == "I":
+                    sum -= 1
+                else:
+                    break
+        if temp == "L":
+            sum += 50
+            if lis:
+                temp = lis.pop()
+                if temp == "X":
+                    sum -= 10
+                    if lis:
+                        temp = lis.pop()
+                    else:
+                        return sum
+        if temp == "C":
+            sum += 100
+            while(lis):
+                temp = lis.pop()
+                if temp == "C":
+                    sum += 100
+                elif temp == "X":
+                    sum -= 10
+                else:
+                    break
+        if temp == "D":
+            sum += 500
+            if lis:
+                temp = lis.pop()
+                if temp == "C":
+                    sum -= 100
+                    if lis:
+                        temp = lis.pop()
+                    else:
+                        return sum
+        if temp == "M":
+            sum += 1000
+            print(lis)
+            while(lis):
+                temp = lis.pop()
+                if temp == "M":
+                    sum += 1000
+                else:
+                    sum -= 100
+        return sum
+```
