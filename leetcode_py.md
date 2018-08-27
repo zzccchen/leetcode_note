@@ -2105,3 +2105,31 @@ class Solution:
         s = s[::-1]
         return int(s,2)
 ```
+
+## 118. 杨辉三角 [easy]
+
+解法 1：
+
+```python
+class Solution(object):
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        if numRows == 0:
+            return []
+        elif numRows == 1:
+            return [[1]]
+        elif numRows == 2:
+            return [[1], [1, 1]]
+        else:
+            res = [[1], [1, 1]]
+            for row in range(2, numRows):
+                temp = [1]
+                for i in range(1, len(res[row-1])):
+                    temp.append(res[row-1][i-1]+res[row-1][i])
+                temp.append(1)
+                res.append(temp)
+        return res
+```
