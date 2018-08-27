@@ -2077,3 +2077,31 @@ class Solution(object):
         """
         return  bin(x^y).count('1')
 ```
+
+## 190. 颠倒二进制位 [easy]
+
+解法 1：
+
+```python
+class Solution:
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        temp = bin(n)[2:]
+        temp = "0"*(32-len(temp))+temp
+        return int(temp[::-1], 2)
+```
+
+解法 2：
+
+神仙操作
+
+```python
+class Solution:
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        s = '{:032b}'.format(n)
+        s = s[::-1]
+        return int(s,2)
+```
