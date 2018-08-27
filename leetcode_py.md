@@ -1997,7 +1997,83 @@ class Solution(object):
         sumn = 0
         while(n > 1):
             sumn += n % 2
-            n = n//2
+            n = n//2def hammingDistance(self, x, y):
+        """
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+        sumn = 0
+        sx, sy = bin(x), bin(y)
+        while(sx and sy):
+            if sx[-1] != sy[-1]:
+                sumn += 1
+            sx, sy = sx[:-1], sy[:-1]
+        if sx:
+            sumn += sx.count("1")
+        elif sy:
+            sumn += sy.count("1")
+        return sumn
         sumn += n
         return sumn
+```
+
+解法 2：
+
+`bin(n)` 把 n 转成二进制的 str，如：
+
+```python
+>>> bin(10)
+'0b1010'
+>>> bin(20)
+'0b10100'
+```
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        return bin(n).count("1")
+```
+
+## 461. 汉明距离 [easy]
+
+解法 1：
+
+```python
+class Solution(object):
+    def hammingDistance(self, x, y):
+        """
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+        sumn = 0
+        sx, sy = bin(x)[2:], bin(y)[2:]
+        while(sx and sy):
+            if sx[-1] != sy[-1]:
+                sumn += 1
+            sx, sy = sx[:-1], sy[:-1]
+        if sx:
+            sumn += sx.count("1")
+        elif sy:
+            sumn += sy.count("1")
+        return sumn
+```
+
+解法 2：
+
+`^` 按位异或运算符：当两对应的二进位相异时，结果为 1
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        return  bin(x^y).count('1')
 ```
