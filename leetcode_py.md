@@ -1982,3 +1982,22 @@ class Solution:
                     sum -= 100
         return sum
 ```
+
+## 191. 位1的个数 [easy]
+
+解法 1：
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        sumn = 0
+        while(n > 1):
+            sumn += n % 2
+            n = n//2
+        sumn += n
+        return sumn
+```
