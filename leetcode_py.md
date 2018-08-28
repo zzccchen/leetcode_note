@@ -2133,3 +2133,42 @@ class Solution(object):
                 res.append(temp)
         return res
 ```
+
+## 20. 有效的括号 [easy]
+
+解法 1：
+
+```python
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        lis = ["*"]
+        for i in s:
+            if i == ")" and lis[-1] == "(":
+                lis.pop()
+            elif i == "]" and lis[-1] == "[":
+                lis.pop()
+            elif i == "}" and lis[-1] == "{":
+                lis.pop()
+            else:
+                lis.append(i)
+        return True if len(lis) == 1 else False
+```
+
+## 268. 缺失数字 [easy]
+
+解法 1：
+
+```python
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        return (n*(n+1)/2) - sum(nums)
+```
