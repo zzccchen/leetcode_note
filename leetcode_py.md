@@ -2211,3 +2211,52 @@ class Solution(object):
 # param_1 = obj.reset()
 # param_2 = obj.shuffle()
 ```
+
+## 15. 三数之和 [medium]
+
+解法 1：
+
+```python
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        length = len(nums)
+        if length < 3:
+            return []
+        nums.sort()
+        res = []
+        it = None
+        for i in range(length-2):
+            if nums[i] == it:
+                continue
+            else:
+                it = nums[i]
+            if it > 0:
+                break
+            ni = -nums[i]
+            head, tail = i+1, length-1
+            while(head < tail):
+                if nums[tail] < 0:
+                    break
+                nsum = nums[head] + nums[tail]
+                if nsum == ni:
+                    res.append([it, nums[head], nums[tail]])
+                    head += 1
+                    while(head < tail and nums[head-1] == nums[head]):
+                        head += 1
+                    tail -= 1
+                    while(head < tail and nums[tail+1] == nums[tail]):
+                        tail -= 1
+                elif nsum > ni:
+                    tail -= 1
+                    while(nums[tail+1] == nums[tail]):
+                        tail -= 1
+                else:
+                    head += 1
+                    while(head < tail and nums[head-1] == nums[head]):
+                        head += 1
+        return res
+```
