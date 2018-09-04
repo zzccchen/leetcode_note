@@ -2260,3 +2260,65 @@ class Solution(object):
                         head += 1
         return res
 ```
+
+## 73. 矩阵置零 [medium]
+
+解法 1：
+
+```python
+class Solution(object):
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        m = len(matrix)
+        if m == 0:
+            return
+        n = len(matrix[0])
+        if n == 0:
+            return
+
+        row = []
+        col = []
+        for i in range(m):
+            for ii in range(n):
+                if matrix[i][ii] == 0:
+                    row.append(i)
+                    col.append(ii)
+        for i in row:
+            matrix[i] = [0] * n
+        for ii in col:
+            for i in range(m):
+                matrix[i][ii] = 0
+```
+
+解法 2：
+
+把行清零换成循环来实现后，速度快了一倍
+
+```python
+class Solution(object):
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        m = len(matrix)
+        if m == 0:
+            return
+        n = len(matrix[0])
+        if n == 0:
+            return
+
+        plc = []
+        for i in range(m):
+            for ii in range(n):
+                if matrix[i][ii] == 0:
+                    plc.append((i, ii))
+        for i in plc:
+            for ii in range(n):
+                matrix[i[0]][ii] = 0
+            for ii in range(m):
+                matrix[ii][i[1]] = 0
+```
