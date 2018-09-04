@@ -2322,3 +2322,35 @@ class Solution(object):
             for ii in range(m):
                 matrix[ii][i[1]] = 0
 ```
+
+## 49. 字母异位词分组 [medium]
+
+解法 1：
+
+```python
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        if not strs:
+            return []
+        rst = []
+        temp = []
+        for i in strs:
+            word = sorted(list(i))
+            temp.append([i, word])
+        temp.sort(key=lambda i:i[1])
+        pre = temp[0][1]
+        rst.append([temp[0][0]])
+        lay = 0
+        for i in range(1, len(temp)):
+            if temp[i][1] == pre:
+                rst[lay].append(temp[i][0])
+            else:
+                pre = temp[i][1]
+                lay += 1
+                rst.append([temp[i][0]])
+        return rst
+```
